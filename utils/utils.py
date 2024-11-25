@@ -1,7 +1,15 @@
 import torch
 import numpy as np
 from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
 import torch.nn as nn
+from utils.visualization import (
+    plot_confusion_matrix,
+    plot_decision_boundaries,
+)
+from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report
 
 
 # feature extractor
@@ -77,3 +85,55 @@ def encoding(model, test_loader, device):
         encoded_features,
         labels_list,
     )
+
+
+def svc_classification(
+    dataset,
+    feature_extractor,
+    class_labels,
+    model_label,
+    dataset_label,
+    test_size,
+    seed,
+    device,
+):
+    features, labels = save_features(dataset, feature_extractor, device)
+
+    tsne = TSNE(n_components=2, random_state=42)
+    features_2d = tsne.fit_transform(features)
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        features_2d, labels, test_size=test_size, random_state=seed
+    )
+
+    # Training
+    svm_clf = SVC(kernel="linear")
+    svm_clf.fit(X_train, y_train)
+    y_pred = svm_clf.predict(X_test)
+
+    accuracy = accuracy_score(y_test, y_pred)
+    print(f"Accuracy - {dataset_label} ({model_label}): {accuracy * 100:.2f}%")
+
+    print(classification_report(y_test, y_pred, target_names=class_labels))
+
+    fig, axes = plt.subplots(1, 2, figsize=(12, 6))
+
+    plot_decision_boundaries(
+        X_train,
+        y_test,
+        svm_clf,
+        f"SVM Classification Training Set - {dataset_label} ({model_label})",
+        axes[0],
+    )
+
+    plot_decision_boundaries(
+        X_test,
+        y_test,
+        svm_clf,
+        f"SVM Classification Test Set - {dataset_label} ({model_label}",
+        axes[1],
+    )
+
+    plt.tight_layout()
+
+    plot_confusion_matrix(y_test, y_pred, f"{dataset_label}", class_labels)

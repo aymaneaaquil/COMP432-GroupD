@@ -3,11 +3,22 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 from sklearn.manifold import TSNE
 import numpy as np
-from utils.utils import FeatureExtractor
 from sklearn.metrics import (
     confusion_matrix,
     ConfusionMatrixDisplay,
 )
+import torch.nn as nn
+
+
+class FeatureExtractor(nn.Module):
+    def __init__(self, original_model):
+        super(FeatureExtractor, self).__init__()
+        self.features = nn.Sequential(*list(original_model.children())[:-1])
+
+    def forward(self, x):
+        x = self.features(x)
+        x = x.view(x.size(0), -1)
+        return x
 
 
 def plot_confusion_matrix(y_true, y_pred, title, label_tags):
@@ -62,7 +73,7 @@ def visualize(model, test_loader, label_tags, title, device):
 
     tsne_2d = TSNE(n_components=2, random_state=42)
     encoded_tsne_2d = tsne_2d.fit_transform(encoded_features)
-    fig, axes = plt.subplots(figsize=(12, 6))
+    fig, axes = plt.subplots(figsize=(10, 6))
 
     # Define a discrete colormap with boundaries based on unique labels
     unique_labels = np.unique(labels)
