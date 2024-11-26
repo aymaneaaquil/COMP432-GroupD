@@ -122,7 +122,7 @@ def svc_classification(
         X_train,
         y_train,
         svm_clf,
-        f"SVM Classification Training Set - {dataset_label} ({model_label})",
+        f"SVM Training Set - {dataset_label} ({model_label})",
         axes[0],
     )
 
@@ -130,7 +130,7 @@ def svc_classification(
         X_test,
         y_test,
         svm_clf,
-        f"SVM Classification Test Set - {dataset_label} ({model_label}",
+        f"SVM Test Set - {dataset_label} ({model_label}",
         axes[1],
     )
 

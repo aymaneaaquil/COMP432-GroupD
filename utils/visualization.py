@@ -122,7 +122,7 @@ def plot_tsne_2d(
     scatter1 = axes[0].scatter(
         preencoded[:, 0], preencoded[:, 1], c=labels, cmap=cmap, norm=norm, alpha=0.6
     )
-    axes[0].set_title(f"Preencoded Features - 3D")
+    axes[0].set_title(f"Pretrained features - 3D")
     cbar1 = fig.colorbar(scatter1, ax=axes[0], shrink=0.7, ticks=unique_labels)
     cbar1.set_label("Labels")
     cbar1.set_ticks(unique_labels)
@@ -158,7 +158,7 @@ def plot_tsne_3d(
         norm=norm,
         alpha=0.6,
     )
-    ax1.set_title(f"Preencoded Features - 2D")
+    ax1.set_title(f"Pretrained features - 3D")
     cbar1 = fig.colorbar(scatter1, ax=ax1, shrink=0.7, ticks=unique_labels)
     cbar1.set_label("Labels")
     cbar1.set_ticks(unique_labels)
