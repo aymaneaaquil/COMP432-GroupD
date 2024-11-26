@@ -120,7 +120,7 @@ def svc_classification(
 
     plot_decision_boundaries(
         X_train,
-        y_test,
+        y_train,
         svm_clf,
         f"SVM Classification Training Set - {dataset_label} ({model_label})",
         axes[0],
