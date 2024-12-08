@@ -11,10 +11,6 @@ Comp 432 Project for Group D, Fall 2024
   - [Prerequisites](#prerequisites)
   - [Setup Steps](#setup-steps)
 - [Training and Validating the Model](#training-and-validating-the-model)
-  - [Training the Model on the Colorectal Cancer Imagery Dataset](#training-the-model-on-the-colorectal-cancer-imagery-dataset)
-  - [Validating the Model on the Colorectal Cancer Imagery Dataset](#validating-the-model-on-the-colorectal-cancer-imagery-dataset)
-  - [Testing the Model on the Prostate Cancer Imagery Dataset and the Animal Faces Dataset](#testing-the-model-on-the-prostate-cancer-imagery-dataset-and-the-animal-faces-dataset)
-  - [Classifying the Prostate Cancer Imagery Dataset and the Animal Faces Dataset](#classifying-the-prostate-cancer-imagery-dataset-and-the-animal-faces-dataset)
 - [Testing the Model on the Sample Test Dataset](#testing-the-model-on-the-sample-test-dataset)
 
 ## Team Members
@@ -29,9 +25,9 @@ Comp 432 Project for Group D, Fall 2024
 
 In this project, the transferability of a Convolutional Neural Network (CNN) was investigated across three datasets:
 
-1. Dataset containing Colorectal Cancer Imagery
-2. Dataset containing Prostate Cancer Imagery
-3. Dataset containing Animal Faces
+1. Colorectal Cancer Imagery
+2. Prostate Cancer Imagery
+3. Animal Faces
 
 A CNN was trained on the Colorectal Cancer Imagery dataset and its ability to extract features from the other datasets without retraining was evaluated. More specifically, the model was tested on the Prostate Cancer Imagery dataset and the Animal Faces dataset.
 
@@ -109,29 +105,24 @@ In order to train the model, the `TRAIN_MODEL` flag in the `main.ipynb` notebook
 
 The remaining cells in the `main.ipynb` notebook are used to:
 
-#### Validating the Model on the Colorectal Cancer Imagery Dataset
+- Validate the model on the Colorectal Cancer Imagery dataset
+- Visualize the encoded features of the Colorectal Cancer Imagery dataset
+- Compare the performance of the trained encoder and the pretrained ImageNet encoder on the Prostate Cancer and Animal Faces datasets
+- Classify the Prostate Cancer and Animal Faces datasets using SVM with features from the pretrained encoder.
 
-- validate the model on the Colorectal Cancer Imagery dataset.
-- visualize the encoded features of the Colorectal Cancer Imagery dataset.
+### Testing the Model on the Sample Test Dataset
 
-#### Testing the Model on the Prostate Cancer Imagery Dataset and the Animal Faces Dataset
+The `test_model.ipynb` notebook contains the code for testing the trained model on the sample test dataset which contains 100 images from each class of the Colorectal Cancer, Prostate Cancer, and Animal Faces datasets. The code performs the following steps:
 
-- encode the feature of the Prostate Cancer Imagery dataset using the trained model as well as a pretrained model on ImageNet dataset.
-- visualize the encoded features of the Prostate Cancer Imagery dataset.
-- encode the feature of the Animal Faces dataset using the trained model as well as a pretrained model on ImageNet dataset.
-- visualize the encoded features of the Animal Faces dataset.
+- Loading the trained model
+- Encoding the features of the sample test dataset and performing classification on the encoded features
+- Assessing the performance of the model using a confusion matrix and a classification report
 
-#### Classifying the Prostate Cancer Imagery Dataset and the Animal Faces Dataset
+Additionaly, if it is required to run the `main.ipynb` notebook on the sample test dataset, the following few lines need to be uncommented:
 
-- classify the Prostate Cancer Imagery dataset using SVM with the encoded features of the trained model and a pretrained model on ImageNet dataset.
-- classify the Animal Faces dataset using SVM with the encoded features of the trained model and a pretrained model on ImageNet dataset.
-
-## Testing the Model on the Sample Test Dataset
-
-In order for ease of testing, the `test_model.ipynb` notebook contains the code for testing the trained model on the sample test data of 100 images from the Colorectal Cancer Imagery dataset.
-
-The cells in the `test_model.ipynb` notebook:
-
-- load the trained model from the `trained_models` folder.
-- encode the features of the sample test dataset and perform classification on the encoded features.
-- assess the performance of the model using a confusiong matrix and a classification report.
+```python
+# uncomment the following lines to use the sample test dataset
+# dataset_colorectal_cancer_path = "./datasets/sample_test_dataset/Colorectal Cancer"
+# dataset_prostate_path = "./datasets/sample_test_dataset/Prostate Cancer"
+# dataset_animal_path = "./datasets/sample_test_dataset/Animal Faces"
+```
